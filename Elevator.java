@@ -1,12 +1,13 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Elevator implements IElevator{
+public class Elevator implements IElevator, Runnable{
 	
 	private Queue<Integer> requests;
 	private int currentFloor;
 	private int elevatorID;
 	private ElevatorDirection direction;
+	private Thread t;
 	
 	public Elevator(int id) {
 		this.elevatorID = id;
@@ -14,6 +15,44 @@ public class Elevator implements IElevator{
 		this.direction = ElevatorDirection.STAND;
 		this.requests = new LinkedList<>();
 		printStatus();
+	}
+	
+	public void start () {
+		if (t == null) {
+			t = new Thread (this);
+			t.start ();
+		}
+	}
+	
+	@Override
+	public void run() {
+		try {
+			int destination;
+			while(!requests.isEmpty()) {
+				destination = requests.peek();
+				while(destination != this.currentFloor){
+					if(this.currentFloor > destination){
+						down();
+					}else if(this.currentFloor < destination){
+						up();
+					}
+					Thread.sleep(400);
+				}
+				arriveDestination();
+				if(requests.isEmpty() && currentFloor != 1){
+					newDestionation(1);
+					this.setDirection(ElevatorDirection.DOWN);
+					System.out.println("Returning to floor 1");
+					printStatus();
+				}else if(requests.isEmpty() && currentFloor == 1){
+					this.setDirection(ElevatorDirection.STAND);
+					System.out.println("Elevator in lobby");
+					printStatus();
+				}
+			}
+		}catch (InterruptedException e) {
+			System.out.println("Thread interrumped");
+		}
 	}
 
 	@Override
@@ -30,6 +69,9 @@ public class Elevator implements IElevator{
 	
 	public void arriveDestination(){
 		requests.remove();
+		
+		System.out.println("Arrive Floor: " + this.currentFloor);
+		
 	}
 	
 	public int nextDestination(){
@@ -61,7 +103,11 @@ public class Elevator implements IElevator{
 	
 	public void printStatus(){
 		System.out.println("Elevator: " + this.elevatorID + 
-				" Floor: " + this.currentFloor + "Direction: " + this.getDirection().getName());
+				" Floor: " + this.currentFloor + " Direction: " + this.getDirection().getName());
+	}
+
+	public Queue<Integer> getRequests() {
+		return requests;
 	}
 
 }
