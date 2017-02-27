@@ -30,6 +30,10 @@ public class Elevator implements IElevator{
 	public void arriveDestination(){
 		requests.remove();
 	}
+	
+	public int nextDestination(){
+		return requests.peek();
+	}
 
 	@Override
 	public void newDestionation(int floor) {

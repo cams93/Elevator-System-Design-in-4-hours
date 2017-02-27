@@ -8,13 +8,13 @@ public class ElevatorController implements IElevatorController{
 	private int numFloors;
 	private int numElevators;
 	private List<Elevator> elevators;
-	private Queue<Integer> destinations;
+	private Queue<Request> requests;
 	
 	public ElevatorController(int elevators, int floors) {
 		this.numElevators = elevators;
 		this.numFloors = floors;
 		this.elevators = new ArrayList<>();
-		this.destinations = new LinkedList<>();
+		this.requests = new LinkedList<>();
 		createElevators();
 	}
 	
@@ -28,17 +28,16 @@ public class ElevatorController implements IElevatorController{
 	
 	@Override
 	public void requestElevator(int floor, ElevatorDirection direction) {
-		// TODO Auto-generated method stub
+		requests.add(new Request(floor, direction));
 		
 	}
 	@Override
 	public void goTo(int id, int floor) {
-		// TODO Auto-generated method stub
-		
+		elevators.get(--id).newDestionation(floor);
 	}
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
