@@ -69,9 +69,7 @@ public class Elevator implements IElevator, Runnable{
 	
 	public void arriveDestination(){
 		requests.remove();
-		
-		System.out.println("Arrive Floor: " + this.currentFloor);
-		
+		System.out.println("Arrive Floor: " + this.currentFloor + " Elevator: " + this.elevatorID);
 	}
 	
 	public int nextDestination(){

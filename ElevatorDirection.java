@@ -2,8 +2,7 @@
 public enum ElevatorDirection {
 	UP("up"),
 	DOWN("down"),
-	STAND("stand"),
-	;
+	STAND("stand");
 	
 	private String name;
 	private ElevatorDirection(String name){

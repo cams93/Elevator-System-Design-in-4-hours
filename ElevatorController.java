@@ -3,8 +3,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import javax.print.attribute.standard.Destination;
-
 public class ElevatorController implements IElevatorController{
 	
 	private int numFloors;
@@ -21,23 +19,23 @@ public class ElevatorController implements IElevatorController{
 	}
 	
 	private void createElevators(){
+		System.out.println("======= Initialization =======");
 		for(int i = 0; i < numElevators; i++){
 			elevators.add(new Elevator(i));
 		}
+		System.out.println("==============================");
 	}
 	
 	@Override
 	public void requestElevator(int floor, ElevatorDirection direction) {
 		requests.add(new Request(floor, direction));
 		sendElevator();
-		
 	}
 	
 	@Override
 	public void goTo(int id, int floor, ElevatorDirection direction) {
 		elevators.get(id).newDestionation(floor);
 		elevators.get(id).setDirection(direction);
-		//elevators.get(id).move();
 	}
 	
 	@Override
