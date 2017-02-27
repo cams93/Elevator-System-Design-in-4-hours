@@ -34,8 +34,9 @@ public class ElevatorController implements IElevatorController{
 	}
 	
 	@Override
-	public void goTo(int id, int floor) {
+	public void goTo(int id, int floor, ElevatorDirection direction) {
 		elevators.get(--id).newDestionation(floor);
+		elevators.get(--id).setDirection(direction);
 	}
 	
 	@Override
@@ -44,7 +45,7 @@ public class ElevatorController implements IElevatorController{
 		ElevatorDirection direction = requests.peek().getDirection();
 		for(Elevator e : elevators){
 			if(e.getDirection().equals(ElevatorDirection.STAND)){
-				goTo(e.getElevatorID(), floor);
+				goTo(e.getElevatorID(), floor, direction);
 				requests.poll();
 			}
 			if(requests.isEmpty()){

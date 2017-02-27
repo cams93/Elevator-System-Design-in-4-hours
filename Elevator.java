@@ -13,18 +13,19 @@ public class Elevator implements IElevator{
 		this.currentFloor = 1;
 		this.direction = ElevatorDirection.STAND;
 		this.requests = new LinkedList<>();
+		printStatus();
 	}
 
 	@Override
 	public void up() {
 		currentFloor++;
-		
+		printStatus();
 	}
 
 	@Override
 	public void down() {
 		currentFloor--;
-		
+		printStatus();
 	}
 	
 	public void arriveDestination(){
@@ -38,7 +39,6 @@ public class Elevator implements IElevator{
 	@Override
 	public void newDestionation(int floor) {
 		requests.add(floor);
-		
 	}
 
 	@Override
@@ -58,7 +58,10 @@ public class Elevator implements IElevator{
 	public int getElevatorID() {
 		return elevatorID;
 	}
-
 	
+	public void printStatus(){
+		System.out.println("Elevator: " + this.elevatorID + 
+				" Floor: " + this.currentFloor + "Direction: " + this.getDirection().getName());
+	}
 
 }
