@@ -29,21 +29,32 @@ public class ElevatorController implements IElevatorController{
 	@Override
 	public void requestElevator(int floor, ElevatorDirection direction) {
 		requests.add(new Request(floor, direction));
+		sendElevator();
 		
 	}
+	
 	@Override
 	public void goTo(int id, int floor) {
 		elevators.get(--id).newDestionation(floor);
 	}
+	
 	@Override
-	public void move() {
-		
-		
+	public void sendElevator() {
+		int floor = requests.peek().getFloor();
+		ElevatorDirection direction = requests.peek().getDirection();
+		for(Elevator e : elevators){
+			if(e.getDirection().equals(ElevatorDirection.STAND)){
+				goTo(e.getElevatorID(), floor);
+				requests.poll();
+			}
+			if(requests.isEmpty()){
+				break;
+			}
+		}
 	}
 
 	public List<Elevator> getElevators() {
 		return elevators;
 	}
 	
-
 }

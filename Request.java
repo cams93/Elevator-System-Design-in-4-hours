@@ -8,4 +8,12 @@ public class Request {
 		this.direction = direction;
 	}
 
+	public int getFloor() {
+		return floor;
+	}
+
+	public ElevatorDirection getDirection() {
+		return direction;
+	}
+
 }
